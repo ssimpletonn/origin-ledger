@@ -1,0 +1,79 @@
+# ============ Зависимости ============
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# ============ Сборка / артефакты ============
+# Next.js (frontend)
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/next-env.d.ts
+*.tsbuildinfo
+next-env.d.ts.timestamp
+
+# Truffle (contracts)
+contracts/build/
+
+# Python (backend)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ============ Переменные окружения (секреты) ============
+.env
+.env.*
+!.env.example
+!.env.local.example
+# явно оставляем примеры
+!*/.env.example
+!*/.env.local.example
+
+# ============ База данных / локальные данные ============
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+
+# ============ Деплой-артефакты (генерируются export_deployment.js) ============
+deployments/*.json
+!deployments/README.md
+
+# ============ Логи ============
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============ ОС / редакторы ============
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
+
+# ============ Claude Code / рабочие файлы ============
+.claude/settings.local.json
+Claude outputs/
+scratchpad/
+
+# ============ Прочее ============
+*.tmp
+*.bak
+coverage/
+.cache/

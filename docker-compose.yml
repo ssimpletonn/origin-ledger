@@ -1,0 +1,41 @@
+# OriginLedger — Postgres + backend API.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: originledger
+      POSTGRES_PASSWORD: originledger
+      POSTGRES_DB: originledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U originledger"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://originledger:originledger@db:5432/originledger
+      # Ганаш крутится на хосте:
+      RPC_URL: http://host.docker.internal:8545
+      DEPLOYMENT_FILE: /app/deployments/development.json
+      START_BLOCK: "0"
+      POLL_INTERVAL: "3"
+      CORS_ORIGINS: http://localhost:3000
+    ports:
+      - "8000:8000"
+    volumes:
+      # адреса/ABI кладёт truffle exec scripts/export_deployment.js
+      - ./deployments:/app/deployments:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  pgdata:
